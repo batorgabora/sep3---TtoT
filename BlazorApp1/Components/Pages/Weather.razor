@@ -1,0 +1,71 @@
+﻿@page "/objects"
+@attribute [StreamRendering]
+@using BlazorApp1.Models
+@using BlazorApp1.Services
+@inject IItemService ItemService
+
+<PageTitle>Objects</PageTitle>
+
+<h1>Objects</h1>
+
+<p>trash n stuff</p>
+
+@if (errorMessage != null)
+{
+    <p class="text-danger">Could not load objects :( @errorMessage</p>
+}
+else if (items == null)
+{
+    <p><em>discomjobulating...</em></p>
+}
+else if (items.Count == 0)
+{
+    <p>i fucked up if ur seeing this</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Uploaded</th>
+                <th>Location</th>
+                <th>Coordinates</th>
+                <th>Uploader</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in items)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.CategoryId</td>
+                    <td>@item.UploadDate.ToShortDateString()</td>
+                    <td>@item.Location</td>
+                    <td>@item.Latitude, @item.Longitude</td>
+                    <td>@item.UploaderId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<ItemDto>? items;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            items = await ItemService.GetAllAsync();
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.Message;
+        }
+    }
+}
