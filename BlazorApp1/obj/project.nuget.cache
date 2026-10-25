@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "o2eZFh7A0OY=",
+  "dgSpecHash": "A21oYCLeaUk=",
   "success": true,
-  "projectFilePath": "C:\\Users\\me085\\OneDrive\\Desktop\\bs\\Shananigans\\BlazorApp1\\BlazorApp1.csproj",
+  "projectFilePath": "/Users/GaboraBrave/Library/Mobile Documents/com~apple~CloudDocs/via/3rd semester/sep/sep 3/BlazorApp1/BlazorApp1.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\me085\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.13\\microsoft.aspnetcore.app.internal.assets.10.0.13.nupkg.sha512"
+    "/Users/GaboraBrave/.nuget/packages/microsoft.aspnetcore.app.internal.assets/10.0.11/microsoft.aspnetcore.app.internal.assets.10.0.11.nupkg.sha512"
   ],
   "logs": []
 }

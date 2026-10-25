@@ -16,6 +16,13 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
+
+### local secrets - databse ###
+db.properties
+
+### maven build output ###
+target/
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
