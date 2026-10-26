@@ -15,6 +15,6 @@ public class HttpItemService : IItemService
     public async Task<List<ItemDto>> GetAllAsync()
     {
         List<ItemDto>? items = await client.GetFromJsonAsync<List<ItemDto>>("items");
-        return items ?? new List<ItemDto>();
+        return items;
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace BlazorApp1.Models;
 
-// One item as T2 sends it in JSON. Same fields as the "item" table.
 public class ItemDto
 {
     public int Id { get; set; }

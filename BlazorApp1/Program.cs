@@ -11,7 +11,7 @@ builder.Services.AddScoped(sp => new HttpClient
     BaseAddress = new Uri(builder.Configuration["T2BaseAddress"]!)
 });
 
-builder.Services.AddScoped<IItemService, FakeItemService>();
+builder.Services.AddScoped<IItemService, HttpItemService>();
 
 var app = builder.Build();
 

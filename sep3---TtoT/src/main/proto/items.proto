@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option csharp_namespace = "T2LogicServer.Grpc";
+option java_multiple_files = true;
+option java_package = "ttot.grpc";
+
+package ttot;
+
+service ItemService {
+  rpc GetAllItems (GetAllItemsRequest) returns (ItemList);
+}
+
+message GetAllItemsRequest {
+}
+
+message ItemMessage {
+  int32 id = 1;
+  string name = 2;
+  string description = 3;
+  int32 category_id = 4;
+  string upload_date = 5;
+  string location = 6;
+  double latitude = 7;
+  double longitude = 8;
+  int32 uploader_id = 9;
+}
+
+message ItemList {
+  repeated ItemMessage items = 1;
+}
