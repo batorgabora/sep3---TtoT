@@ -1,0 +1,54 @@
+@page "/items"
+@using TtoT_Blazor.Models
+@using TtoT_Blazor.Services
+@inject IItemService ItemService
+
+<PageTitle>items</PageTitle>
+
+<h3>all items</h3>
+
+@if (errorMessage != null)
+{
+    <p class="validation-message">@errorMessage</p>
+}
+else if (items == null)
+{
+    <p>loading...</p>
+}
+else if (items.Count == 0)
+{
+    <p>no items yet.</p>
+}
+else
+{
+    <ul>
+        @foreach (ItemDto item in items)
+        {
+            <li>
+                <strong>@item.Name</strong>
+                @if (!string.IsNullOrEmpty(item.Location))
+                {
+                    <span> · @item.Location</span>
+                }
+                <span style="color: var(--text-subtle)"> · @item.UploadDate.ToString("yyyy-MM-dd")</span>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private List<ItemDto>? items;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            items = await ItemService.GetAllAsync();
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.Message;
+        }
+    }
+}

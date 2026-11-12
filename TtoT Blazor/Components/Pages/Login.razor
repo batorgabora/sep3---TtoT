@@ -1,0 +1,48 @@
+@page "/login"
+@using TtoT_Blazor.Services
+@inject SimpleAuthProvider AuthProvider
+@inject NavigationManager NavigationManager
+
+<PageTitle>log in</PageTitle>
+
+<h3>log in</h3>
+
+<label>username:</label>
+<input type="text" @bind="userName" />
+
+<label>password:</label>
+<input type="password" @bind="password" />
+
+<button @onclick="LoginAsync">log in</button>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p class="validation-message">@errorMessage</p>
+}
+
+@code {
+    private string userName = "";
+    private string password = "";
+    private string? errorMessage;
+
+    private async Task LoginAsync()
+    {
+        errorMessage = null;
+        try
+        {
+            bool success = await AuthProvider.LoginAsync(userName, password);
+            if (success)
+            {
+                NavigationManager.NavigateTo("/items");
+            }
+            else
+            {
+                errorMessage = "invalid username or password";
+            }
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.Message;
+        }
+    }
+}

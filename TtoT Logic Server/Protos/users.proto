@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "TtoT_Logic_Server.Grpc";
+option java_multiple_files = true;
+option java_package = "ttot.grpc";
+
+package ttot;
+
+service UserService {
+  rpc GetUserByUsername (GetUserByUsernameRequest) returns (UserMessage);
+}
+
+message GetUserByUsernameRequest {
+  string username = 1;
+}
+
+message UserMessage {
+  int32 id = 1;
+  string username = 2;
+  string password = 3;
+}
