@@ -66,4 +66,25 @@ public class UserDaoImpl implements UserDao
       }
     }
   }
+
+  @Override
+  public User getByUsername(String username) throws SQLException
+  {
+    String sql = "select id, username, password from ttot.\"user\" where username = ?";
+
+    try (Connection connection = DataBaseConnection.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql))
+    {
+      statement.setString(1, username);
+      try (ResultSet resultSet = statement.executeQuery())
+      {
+        if (resultSet.next())
+        {
+          return new User(resultSet.getInt("id"), resultSet.getString("username"),
+              resultSet.getString("password"));
+        }
+        return null;
+      }
+    }
+  }
 }
