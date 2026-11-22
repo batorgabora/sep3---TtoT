@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="@Assets["lib/bootstrap/dist/css/bootstrap.min.css"]" />
     <link rel="stylesheet" href="@Assets["app.css"]" />
     <link rel="stylesheet" href="@Assets["TtoT Blazor.styles.css"]" />
+    <!-- makes map look sexy -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <ImportMap />
     <link rel="icon" type="image/png" href="favicon.png" />
     <HeadOutlet @rendermode="InteractiveServer" />
@@ -17,6 +19,9 @@
 <body>
 <Routes @rendermode="InteractiveServer" />
 <ReconnectModal />
+//runs these scripts every time we start app, scripts link map
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/map.js"></script>
 <script src="@Assets["_framework/blazor.web.js"]"></script>
 </body>
 

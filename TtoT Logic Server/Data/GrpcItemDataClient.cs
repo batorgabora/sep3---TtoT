@@ -17,7 +17,28 @@ public class GrpcItemDataClient : IItemDataClient
     {
         ItemList reply = await client.GetAllItemsAsync(new GetAllItemsRequest());
 
-        return reply.Items.Select(m => new ItemDto
+        return reply.Items.Select(ToDto).ToList();
+    }
+
+    public async Task<ItemDto> CreateAsync(CreateItemDto item)
+    {
+        ItemMessage reply = await client.CreateItemAsync(new CreateItemRequest
+        {
+            Name = item.Name,
+            Description = item.Description ?? "",
+            CategoryId = item.CategoryId,
+            Location = item.Location ?? "",
+            Latitude = (double)(item.Latitude ?? 0),
+            Longitude = (double)(item.Longitude ?? 0),
+            UploaderId = item.UploaderId
+        });
+
+        return ToDto(reply);
+    }
+
+    private static ItemDto ToDto(ItemMessage m)
+    {
+        return new ItemDto
         {
             Id = m.Id,
             Name = m.Name,
@@ -28,6 +49,6 @@ public class GrpcItemDataClient : IItemDataClient
             Latitude = (decimal)m.Latitude,
             Longitude = (decimal)m.Longitude,
             UploaderId = m.UploaderId
-        }).ToList();
+        };
     }
 }

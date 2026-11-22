@@ -21,4 +21,18 @@ public class ItemsController : ControllerBase
         List<ItemDto> items = await itemLogic.GetAllAsync();
         return Ok(items);
     }
+
+    [HttpPost]
+    public async Task<ActionResult<ItemDto>> Create([FromBody] CreateItemDto request)
+    {
+        try
+        {
+            ItemDto item = await itemLogic.CreateAsync(request);
+            return Ok(item);
+        }
+        catch (ArgumentException e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

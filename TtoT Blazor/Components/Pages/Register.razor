@@ -1,0 +1,64 @@
+@page "/register"
+@using TtoT_Blazor.Services
+@inject SimpleAuthProvider AuthProvider
+@inject NavigationManager NavigationManager
+
+<PageTitle>register</PageTitle>
+
+<h3>register</h3>
+
+<label>username:</label>
+<input type="text" @bind="userName" />
+
+<label>password:</label>
+<input type="password" @bind="password" />
+
+<label>repeat password:</label>
+<input type="password" @bind="confirmPassword" />
+
+<button @onclick="RegisterAsync">register</button>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p class="validation-message">@errorMessage</p>
+}
+
+@code {
+    private string userName = "";
+    private string password = "";
+    private string confirmPassword = "";
+    private string? errorMessage;
+
+    private async Task RegisterAsync()
+    {
+        errorMessage = null;
+
+        if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrEmpty(password))
+        {
+            errorMessage = "username and password are required";
+            return;
+        }
+        if (password != confirmPassword)
+        {
+            errorMessage = "passwords do not match";
+            return;
+        }
+
+        try
+        {
+            string? error = await AuthProvider.RegisterAsync(userName.Trim(), password, confirmPassword);
+            if (error == null)
+            {
+                NavigationManager.NavigateTo("/items");
+            }
+            else
+            {
+                errorMessage = error;
+            }
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.Message;
+        }
+    }
+}

@@ -8,9 +8,20 @@ package ttot;
 
 service ItemService {
   rpc GetAllItems (GetAllItemsRequest) returns (ItemList);
+  rpc CreateItem (CreateItemRequest) returns (ItemMessage);
 }
 
 message GetAllItemsRequest {
+}
+
+message CreateItemRequest {
+  string name = 1;
+  string description = 2;
+  int32 category_id = 3;
+  string location = 4;
+  double latitude = 5;
+  double longitude = 6;
+  int32 uploader_id = 7;
 }
 
 message ItemMessage {

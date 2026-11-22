@@ -2,10 +2,13 @@
 @using TtoT_Blazor.Models
 @using TtoT_Blazor.Services
 @inject IItemService ItemService
+@inject NavigationManager NavigationManager
 
 <PageTitle>items</PageTitle>
 
 <h3>all items</h3>
+
+<button @onclick='() => NavigationManager.NavigateTo("/items/report")'>report item</button>
 
 @if (errorMessage != null)
 {

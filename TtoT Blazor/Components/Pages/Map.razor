@@ -1,0 +1,26 @@
+﻿@page "/map"
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+<!-- same as other pages but displays the linked map instead -->
+<PageTitle>map</PageTitle>
+<h3>map</h3>
+
+<div id="ttot-map" style="height: 300px; width: 90%;"></div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            //set it to our horsens hoods, can be modified later
+            await JS.InvokeVoidAsync("ttotMap.init", "ttot-map", 55.861, 9.850, 13);
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        try { await JS.InvokeVoidAsync("ttotMap.dispose", "ttot-map"); }
+        catch (JSDisconnectedException) { } 
+    }
+}

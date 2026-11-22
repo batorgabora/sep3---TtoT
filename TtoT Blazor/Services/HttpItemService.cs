@@ -17,4 +17,16 @@ public class HttpItemService : IItemService
         List<ItemDto>? items = await client.GetFromJsonAsync<List<ItemDto>>("items");
         return items;
     }
+
+    public async Task<string?> CreateAsync(CreateItemDto item)
+    {
+        HttpResponseMessage httpResponse = await client.PostAsJsonAsync("items", item);
+
+        if (!httpResponse.IsSuccessStatusCode)
+        {
+            return await httpResponse.Content.ReadAsStringAsync();
+        }
+
+        return null;
+    }
 }

@@ -8,10 +8,16 @@ package ttot;
 
 service UserService {
   rpc GetUserByUsername (GetUserByUsernameRequest) returns (UserMessage);
+  rpc CreateUser (CreateUserRequest) returns (UserMessage);
 }
 
 message GetUserByUsernameRequest {
   string username = 1;
+}
+
+message CreateUserRequest {
+  string username = 1;
+  string password = 2;
 }
 
 message UserMessage {

@@ -32,4 +32,32 @@ public class AuthLogic : IAuthLogic
             UserName = user.UserName
         };
     }
+
+    public async Task<UserDto> RegisterAsync(RegisterRequestDto request)
+    {
+        if (string.IsNullOrWhiteSpace(request.UserName))
+        {
+            throw new ArgumentException("username is required");
+        }
+        if (string.IsNullOrEmpty(request.Password))
+        {
+            throw new ArgumentException("password is required");
+        }
+        if (request.Password != request.ConfirmPassword)
+        {
+            throw new ArgumentException("passwords do not match");
+        }
+
+        User? user = await dataClient.CreateAsync(request.UserName.Trim(), request.Password);
+        if (user == null)
+        {
+            throw new InvalidOperationException("username is already taken");
+        }
+
+        return new UserDto
+        {
+            Id = user.Id,
+            UserName = user.UserName
+        };
+    }
 }
