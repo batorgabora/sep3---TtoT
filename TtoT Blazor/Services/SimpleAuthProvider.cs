@@ -48,6 +48,20 @@ public class SimpleAuthProvider : AuthenticationStateProvider
         return true;
     }
 
+    public async Task<string?> RegisterAsync(string userName, string password, string confirmPassword)
+    {
+        RegisterRequestDto request = new() { UserName = userName, Password = password, ConfirmPassword = confirmPassword };
+        HttpResponseMessage httpResponse = await client.PostAsJsonAsync("auth/register", request);
+
+        if (!httpResponse.IsSuccessStatusCode)
+        {
+            return await httpResponse.Content.ReadAsStringAsync();
+        }
+
+        await LoginAsync(userName, password);
+        return null;
+    }
+
     public void Logout()
     {
         currentUser = new ClaimsPrincipal(new ClaimsIdentity());

@@ -25,4 +25,22 @@ public class AuthController : ControllerBase
         }
         return Ok(user);
     }
+
+    [HttpPost("register")]
+    public async Task<ActionResult<UserDto>> Register([FromBody] RegisterRequestDto request)
+    {
+        try
+        {
+            UserDto user = await authLogic.RegisterAsync(request);
+            return Ok(user);
+        }
+        catch (ArgumentException e)
+        {
+            return BadRequest(e.Message);
+        }
+        catch (InvalidOperationException e)
+        {
+            return Conflict(e.Message);
+        }
+    }
 }

@@ -5,4 +5,5 @@ namespace TtoT_Blazor.Services;
 public interface IItemService
 {
     Task<List<ItemDto>> GetAllAsync();
+    Task<string?> CreateAsync(CreateItemDto item);
 }

@@ -1,0 +1,82 @@
+@page "/items/report"
+@using TtoT_Blazor.Models
+@using TtoT_Blazor.Services
+@inject IItemService ItemService
+@inject SimpleAuthProvider AuthProvider
+@inject NavigationManager NavigationManager
+
+<PageTitle>report item</PageTitle>
+
+<h3>report item</h3>
+
+<label>name:</label>
+<input type="text" @bind="item.Name" />
+
+<label>description:</label>
+<input type="text" @bind="item.Description" />
+
+<label>category id:</label>
+<input type="number" @bind="item.CategoryId" />
+
+<label>location:</label>
+<input type="text" @bind="item.Location" />
+
+<label>latitude:</label>
+<input type="number" step="any" @bind="item.Latitude" />
+
+<label>longitude:</label>
+<input type="number" step="any" @bind="item.Longitude" />
+
+<button @onclick="ReportAsync">report item</button>
+<button @onclick='() => NavigationManager.NavigateTo("/items")'>cancel</button>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p class="validation-message">@errorMessage</p>
+}
+
+@code {
+    private CreateItemDto item = new();
+    private string? errorMessage;
+
+    private async Task ReportAsync()
+    {
+        errorMessage = null;
+
+        int? userId = AuthProvider.GetCurrentUserId();
+        if (userId == null)
+        {
+            errorMessage = "you must be logged in to report an item";
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(item.Name))
+        {
+            errorMessage = "name is required";
+            return;
+        }
+        if (item.Latitude == null || item.Longitude == null)
+        {
+            errorMessage = "latitude and longitude are required";
+            return;
+        }
+
+        item.UploaderId = userId.Value;
+
+        try
+        {
+            string? error = await ItemService.CreateAsync(item);
+            if (error == null)
+            {
+                NavigationManager.NavigateTo("/items");
+            }
+            else
+            {
+                errorMessage = error;
+            }
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.Message;
+        }
+    }
+}

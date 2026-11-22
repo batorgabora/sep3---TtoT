@@ -5,4 +5,5 @@ namespace TtoT_Logic_Server.Data;
 public interface IUserDataClient
 {
     Task<User?> GetByUserNameAsync(string userName);
+    Task<User?> CreateAsync(string userName, string password);
 }

@@ -31,4 +31,23 @@ public class GrpcUserDataClient : IUserDataClient
             return null;
         }
     }
+
+    public async Task<User?> CreateAsync(string userName, string password)
+    {
+        try
+        {
+            UserMessage reply = await client.CreateUserAsync(new CreateUserRequest { Username = userName, Password = password });
+
+            return new User
+            {
+                Id = reply.Id,
+                UserName = reply.Username,
+                Password = reply.Password
+            };
+        }
+        catch (RpcException e) when (e.StatusCode == StatusCode.AlreadyExists)
+        {
+            return null;
+        }
+    }
 }
