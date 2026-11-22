@@ -9,5 +9,6 @@ public class TtotServerApplication
   public static void main(String[] args)
   {
     SpringApplication.run(TtotServerApplication.class, args);
+    System.out.println("it ran i guess cuh");
   }
 }

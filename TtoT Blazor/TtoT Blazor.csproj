@@ -8,4 +8,8 @@
     <RootNamespace>TtoT_Blazor</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\resources\poster-viewer.png" />
+  </ItemGroup>
+
 </Project>

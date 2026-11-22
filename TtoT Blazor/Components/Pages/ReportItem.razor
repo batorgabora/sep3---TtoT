@@ -9,31 +9,50 @@
 
 <h3>report item</h3>
 
-<label>name:</label>
-<input type="text" @bind="item.Name" />
+<div class="t2t-form">
+    <div class="form-row">
+        <label for="name">name:</label>
+        <input id="name" type="text" @bind="item.Name" placeholder="beep boop" />
+    </div>
 
-<label>description:</label>
-<input type="text" @bind="item.Description" />
+    <div class="form-row">
+        <label for="description">description:</label>
+        <input id="description" type="text" @bind="item.Description" placeholder="some beeps some boops" />
+    </div>
 
-<label>category id:</label>
-<input type="number" @bind="item.CategoryId" />
+    <div class="form-row">
+        <label for="category">category id:</label>
+        <input id="category" type="number" min="1" @bind="item.CategoryId" />
+        <span class="hint">a number from the category table, for now</span>
+    </div>
 
-<label>location:</label>
-<input type="text" @bind="item.Location" />
+    <div class="form-row">
+        <label for="location">location:</label>
+        <input id="location" type="text" @bind="item.Location" placeholder="horsens, by the station" />
+    </div>
 
-<label>latitude:</label>
-<input type="number" step="any" @bind="item.Latitude" />
+    <div class="form-row">
+        <label for="latitude">latitude:</label>
+        <input id="latitude" type="number" step="any" @bind="item.Latitude" placeholder="55.861" />
+        <span class="hint">decimal degrees, between -90 and 90</span>
+    </div>
 
-<label>longitude:</label>
-<input type="number" step="any" @bind="item.Longitude" />
+    <div class="form-row">
+        <label for="longitude">longitude:</label>
+        <input id="longitude" type="number" step="any" @bind="item.Longitude" placeholder="9.850" />
+        <span class="hint">decimal degrees, between -180 and 180</span>
+    </div>
 
-<button @onclick="ReportAsync">report item</button>
-<button @onclick='() => NavigationManager.NavigateTo("/items")'>cancel</button>
+    <div class="form-actions">
+        <button class="btn-main" @onclick="ReportAsync">report item</button>
+        <button class="btn-quiet" @onclick='() => NavigationManager.NavigateTo("/items")'>cancel</button>
+    </div>
 
-@if (!string.IsNullOrEmpty(errorMessage))
-{
-    <p class="validation-message">@errorMessage</p>
-}
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <p class="validation-message form-error">@errorMessage</p>
+    }
+</div>
 
 @code {
     private CreateItemDto item = new();
@@ -54,9 +73,19 @@
             errorMessage = "name is required";
             return;
         }
+        if (item.CategoryId <= 0)
+        {
+            errorMessage = "category id must be 1 or higher";
+            return;
+        }
         if (item.Latitude == null || item.Longitude == null)
         {
             errorMessage = "latitude and longitude are required";
+            return;
+        }
+        if (item.Latitude < -90 || item.Latitude > 90 || item.Longitude < -180 || item.Longitude > 180)
+        {
+            errorMessage = "latitude must be between -90 and 90, longitude between -180 and 180";
             return;
         }
 

@@ -6,52 +6,53 @@
 
 <PageTitle>items</PageTitle>
 
-<h3>all items</h3>
-
-<button @onclick='() => NavigationManager.NavigateTo("/items/report")'>report item</button>
+<div class="page-header">
+    <h3>all items</h3>
+    <button class="btn-main" @onclick='() => NavigationManager.NavigateTo("/items/report")'>report item</button>
+</div>
 
 @if (errorMessage != null)
 {
-    <p class="validation-message">@errorMessage</p>
+<p class="validation-message">@errorMessage</p>
 }
 else if (items == null)
 {
-    <p>loading...</p>
+<p>loading...</p>
 }
 else if (items.Count == 0)
 {
-    <p>no items yet.</p>
+<p>no items yet.</p>
 }
 else
 {
-    <ul>
-        @foreach (ItemDto item in items)
+<ul>
+    @foreach (ItemDto item in items)
+    {
+    <li>
+        <strong>@item.Name</strong>
+        @if (!string.IsNullOrEmpty(item.Location))
         {
-            <li>
-                <strong>@item.Name</strong>
-                @if (!string.IsNullOrEmpty(item.Location))
-                {
-                    <span> · @item.Location</span>
-                }
-                <span style="color: var(--text-subtle)"> · @item.UploadDate.ToString("yyyy-MM-dd")</span>
-            </li>
+        <span> · @item.Location</span>
         }
-    </ul>
+        <span style="color: var(--text-subtle)"> · @item.UploadDate.ToString("yyyy-MM-dd")</span>
+    </li>
+    }
+</ul>
 }
 
 @code {
-    private List<ItemDto>? items;
-    private string? errorMessage;
+private List<ItemDto>? items;
+private string? errorMessage;
 
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            items = await ItemService.GetAllAsync();
-        }
-        catch (Exception e)
-        {
-            errorMessage = e.Message;
-        }
-    }
+protected override async Task OnInitializedAsync()
+{
+try
+{
+items = await ItemService.GetAllAsync();
+}
+catch (Exception e)
+{
+errorMessage = e.Message;
+}
+}
 }

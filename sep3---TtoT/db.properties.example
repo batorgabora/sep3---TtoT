@@ -1,3 +1,0 @@
-spring.datasource.url=jdbc:postgresql://<your-neon-host>/neondb?sslmode=require
-spring.datasource.username=neondb_owner
-spring.datasource.password=<your password - it's on neon>
