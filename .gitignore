@@ -38,11 +38,8 @@ target/
 # Local secrets
 db.properties
 
-# Personal IDE settings; Rider's shared solution settings stay in the repo
-/.idea/*
-!/.idea/.idea.TtoT/
-BlazorApp1/.idea/
-T2LogicServer/.idea/
+# IDE settings (Rider / IntelliJ), in every folder
+.idea/
 .vs/
 .vscode/
 
